@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific
+server_data/
+*.db
+*.sqlite3
+server.crt
+server.key
+*.log
+
+# Секреты (если есть)
+.env
+*.env

@@ -1,0 +1,29 @@
+eapm_cascade/
+├── main.py                     # Точка входа
+├── config.py                   # Глобальные настройки, тема
+├── models/                     # Модели данных
+│   ├── message.py              # Класс Message (dataclass) + стего-маркеры
+│   └── user.py                 # Модель User
+├── encryption/                 # Шифрование и ключи
+│   ├── aes_cipher.py           # AES-256 CBC (cryptography)
+│   ├── time_cipher.py          # Time‑based (AES с ключом от времени+соль)
+│   ├── key_storage.py          # Хранилище ключей в памяти сессии
+│   └── (hybrid_steganography.py лежит в корне)
+├── server/                     # Локальный «сервер» (файловое хранилище)
+│   ├── server_api.py           # API для работы с почтовыми ящиками (устаревший?)
+│   ├── user_manager.py         # Управление пользователями (хеши паролей PBKDF2)
+│   └── users.json              # Файл с паролями
+├── storage/                    # Репозиторий для локального режима
+│   └── local_file_repo.py      # Полноценная замена ServerAPI (JSON-индексы, вложения)
+├── gui/
+│   ├── main_window.py          # Главное окно, управление экранами
+│   ├── login_view.py           # Экран входа/регистрации (локальный/сетевой)
+│   ├── mailbox_view.py         # Список писем + панель содержимого + вложения
+│   ├── compose_view.py         # Окно нового письма (шифрование, стего, вложения)
+│   ├── decryptor_dialog.py     # Интерактивный дешифратор (основное + стего)
+│   ├── key_manager_view.py     # Менеджер ключей (AES, соли, номерные ключи)
+│   ├── dialogs.py              # Общие диалоги (messagebox, input)
+│   └── styles.py               # Цвета, шрифты, тема
+└── utils/                      # Вспомогательные классы
+    ├── clipboard.py            # Работа с буфером обмена (Ctrl+C/V, контекстное меню)
+    └── validators.py           # Валидация логина, пароля, AES-ключа, соли

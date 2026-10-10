@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAPM · КАСКАД</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen screen-login" id="screen-login">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo">
+                <div class="logo-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-title">EAPM · КАСКАД</div>
+                    <div class="logo-sub">Защищённая почта · v2.0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-grid">
+            <div class="login-col">
+                <div class="section-title">Вход в систему</div>
+
+                <div class="field">
+                    <label class="field-label">Логин</label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
+                        </svg>
+                        <input type="text" id="login-input" placeholder="username" autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="field-label">Пароль</label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="10" width="16" height="10" rx="2"/>
+                            <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                        </svg>
+                        <input type="password" id="password-input" placeholder="••••••••" autocomplete="current-password">
+                    </div>
+                </div>
+
+                <div class="login-actions">
+                    <button class="btn primary" id="btn-login">
+                        Войти
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                    <button class="btn ghost" id="btn-register">Регистрация</button>
+                </div>
+
+                <div class="status-line" id="login-status"></div>
+            </div>
+
+            <div class="login-col">
+                <div class="section-title">Режим работы</div>
+
+                <div class="mode-tabs">
+                    <label class="mode-tab">
+                        <input type="radio" name="storage-mode" value="local" checked>
+                        <div class="mode-tab-inner">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                                <path d="M3 12l9 4 9-4"/>
+                                <path d="M3 17l9 4 9-4"/>
+                            </svg>
+                            <div>
+                                <div class="mode-name">Локальный</div>
+                                <div class="mode-desc">Папка на компьютере</div>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="mode-tab">
+                        <input type="radio" name="storage-mode" value="network">
+                        <div class="mode-tab-inner">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
+                            </svg>
+                            <div>
+                                <div class="mode-name">Сетевой</div>
+                                <div class="mode-desc">Подключение к серверу</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="mode-params" id="params-local">
+                    <div class="field">
+                        <label class="field-label">Папка с данными</label>
+                        <div class="input-row">
+                            <input type="text" id="local-path" value="./server_data">
+                            <button class="btn small ghost" id="btn-browse">Обзор</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mode-params hidden" id="params-network">
+                    <div class="field">
+                        <label class="field-label">Сервер</label>
+                        <input type="text" id="server-addr" placeholder="mail.example.com">
+                    </div>
+                    <div class="field">
+                        <label class="field-label">Порт</label>
+                        <input type="text" id="server-port" value="443">
+                    </div>
+                    <label class="checkbox">
+                        <input type="checkbox" id="server-tls" checked>
+                        <span class="checkbox-mark"></span>
+                        <span>Использовать TLS/SSL</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="screen screen-mailbox hidden" id="screen-mailbox">
+    <header class="topbar">
+        <div class="topbar-left">
+            <div class="logo-mark small">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+            </div>
+            <span class="topbar-title">EAPM · КАСКАД</span>
+        </div>
+
+        <div class="topbar-right">
+            <div class="user-chip">
+                <span class="conn-dot" id="conn-dot"></span>
+                <span class="user-name" id="topbar-user">Admin</span>
+            </div>
+            <button class="icon-btn" id="btn-logout" title="Выйти">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <path d="M16 17l5-5-5-5M21 12H9"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="mailbox">
+        <section class="pane pane-list">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="inbox">Входящие</button>
+                <button class="filter-btn" data-filter="sent">Исходящие</button>
+            </div>
+            <div class="message-list" id="message-list"></div>
+            <div class="empty-list hidden" id="list-empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M4 4h16v16H4z"/><path d="M4 8l8 6 8-6"/>
+                </svg>
+                <p>Писем нет</p>
+            </div>
+        </section>
+
+        <section class="pane pane-content">
+            <div class="content-empty" id="content-empty">
+                <div class="empty-illustration">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 6l8 6 8-6M4 6h16v12H4z"/>
+                    </svg>
+                </div>
+                <h3>Выберите письмо</h3>
+                <p>Список слева — содержимое здесь</p>
+            </div>
+
+            <article class="message-view hidden" id="message-view">
+                <header class="msg-header">
+                    <h2 class="msg-subject" id="msg-subject"></h2>
+                    <div class="msg-badges" id="msg-badges"></div>
+                    <div class="msg-meta">
+                        <div class="meta-avatar" id="msg-avatar">D</div>
+                        <div class="meta-text">
+                            <div class="meta-line">
+                                <span class="meta-strong" id="msg-from"></span>
+                                <span class="meta-muted">→</span>
+                                <span class="meta-muted" id="msg-to"></span>
+                            </div>
+                            <div class="meta-muted small" id="msg-date"></div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="msg-body" id="msg-body"></div>
+
+                <div class="msg-attachments hidden" id="msg-attachments">
+                    <div class="att-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                        </svg>
+                        Вложения
+                    </div>
+                    <div class="att-list" id="attachments-list"></div>
+                </div>
+            </article>
+        </section>
+
+        <aside class="pane pane-tools">
+            <button class="tool-btn primary" id="btn-compose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+                <span>Написать</span>
+            </button>
+
+            <div class="tool-divider"></div>
+
+            <button class="tool-btn" id="btn-refresh">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>
+                </svg>
+                <span>Обновить</span>
+            </button>
+            <button class="tool-btn" id="btn-decrypt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="10" width="16" height="10" rx="2"/>
+                    <path d="M8 10V7a4 4 0 0 1 7.5-2"/>
+                </svg>
+                <span>Дешифровать</span>
+            </button>
+            <button class="tool-btn" id="btn-extract-stego">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 7l9-4 9 4-9 4-9-4z"/>
+                    <path d="M3 12l9 4 9-4M3 17l9 4 9-4"/>
+                </svg>
+                <span>Стего</span>
+            </button>
+            <button class="tool-btn" id="btn-keys">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="15" r="4"/>
+                    <path d="M10.85 12.15L19 4M18 5l2 2M15 8l2 2"/>
+                </svg>
+                <span>Ключи</span>
+            </button>
+
+            <div class="tool-divider"></div>
+
+            <button class="tool-btn danger" id="btn-delete-all">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                </svg>
+                <span>Очистить</span>
+            </button>
+        </aside>
+    </main>
+</div>
+
+<!-- ============================================================
+     MODAL: COMPOSE
+     ============================================================ -->
+<div class="modal hidden" id="modal-compose">
+    <div class="modal-backdrop" data-close="modal-compose"></div>
+    <div class="modal-window modal-wide">
+        <header class="modal-header">
+            <h2>Новое письмо</h2>
+            <button class="icon-btn" data-close="modal-compose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </header>
+
+        <div class="modal-body compose-grid">
+            <div class="compose-main">
+                <div class="field">
+                    <label class="field-label">Кому</label>
+                    <input type="text" id="compose-to" placeholder="username">
+                </div>
+                <div class="field">
+                    <label class="field-label">Тема</label>
+                    <input type="text" id="compose-subject" placeholder="Тема письма">
+                </div>
+                <div class="field grow">
+                    <label class="field-label">Сообщение</label>
+                    <textarea id="compose-body" placeholder="Напишите что-нибудь..."></textarea>
+                </div>
+            </div>
+
+            <div class="compose-side">
+                <div class="panel">
+                    <div class="panel-title">Шифрование</div>
+                    <div class="chip-group">
+                        <label class="chip">
+                            <input type="radio" name="enc-mode" value="none" checked>
+                            <span>Нет</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="enc-mode" value="aes">
+                            <span>AES-256</span>
+                        </label>
+                        <label class="chip">
+                            <input type="radio" name="enc-mode" value="time">
+                            <span>Time</span>
+                        </label>
+                    </div>
+                    <div class="enc-block hidden" id="enc-key-block">
+                        <label class="field-label" id="enc-key-label">Ключ</label>
+                        <div class="input-row">
+                            <input type="text" id="enc-key" placeholder="ключ или соль">
+                            <button class="icon-btn" id="btn-gen-key" title="Генерировать">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <div class="panel-title">Стенография</div>
+                        <label class="switch">
+                            <input type="checkbox" id="stego-toggle">
+                            <span class="switch-track"></span>
+                        </label>
+                    </div>
+                    <div class="stego-block hidden" id="stego-content">
+                        <label class="field-label">Скрытое сообщение</label>
+                        <textarea id="stego-msg" placeholder="Секретный текст..." rows="3"></textarea>
+
+                        <label class="field-label">AES-ключ (64 hex)</label>
+                        <div class="input-row">
+                            <input type="text" id="stego-key" placeholder="64 hex">
+                            <button class="icon-btn" id="btn-gen-stego" title="Генерировать">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <button class="btn small ghost full" id="btn-gen-keyfile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="8" cy="15" r="4"/>
+                                <path d="M10.85 12.15L19 4M18 5l2 2M15 8l2 2"/>
+                            </svg>
+                            Сгенерировать ключ-файл
+                        </button>
+
+                        <input type="text" id="stego-keyfile" readonly placeholder="результат">
+                    </div>
+                </div>
+
+                <div class="panel grow">
+                    <div class="panel-title">Вложения</div>
+                    <div class="att-box" id="compose-attachments">
+                        <div class="muted small center">Нет вложений</div>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="btn small ghost" id="btn-add-file">Добавить</button>
+                        <input type="file" id="file-input" multiple hidden>
+                        <button class="btn small ghost danger" id="btn-clear-files">Очистить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="modal-footer">
+            <button class="btn ghost" data-close="modal-compose">Отмена</button>
+            <button class="btn primary" id="btn-send">
+                Отправить
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+            </button>
+        </footer>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL: DECRYPTOR
+     ============================================================ -->
+<div class="modal hidden" id="modal-decryptor">
+    <div class="modal-backdrop" data-close="modal-decryptor"></div>
+    <div class="modal-window">
+        <header class="modal-header">
+            <h2>
+                <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="10" width="16" height="10" rx="2"/>
+                    <path d="M8 10V7a4 4 0 0 1 7.5-2"/>
+                </svg>
+                Дешифратор
+            </h2>
+            <button class="icon-btn" data-close="modal-decryptor">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </header>
+
+        <div class="modal-body">
+            <div class="info-card">
+                <div class="info-row"><span class="muted">От</span><span id="dec-sender"></span></div>
+                <div class="info-row"><span class="muted">Тема</span><span id="dec-subject"></span></div>
+            </div>
+
+            <div class="step">
+                <div class="step-head">
+                    <div class="step-num">1</div>
+                    <div class="step-title">Основное шифрование</div>
+                    <div class="status-pill" id="dec-step1-status">не расшифровано</div>
+                </div>
+                <div class="step-body">
+                    <div class="muted small">Тип: <span id="dec-type">Нет</span></div>
+                    <div class="field">
+                        <label class="field-label" id="dec-key-label">Ключ</label>
+                        <input type="text" id="dec-key" placeholder="Введите ключ или соль">
+                    </div>
+                    <button class="btn primary full" id="btn-decrypt-main">Расшифровать</button>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-head">
+                    <div class="step-num">2</div>
+                    <div class="step-title">Скрытое сообщение</div>
+                    <div class="status-pill" id="dec-step2-status">не обнаружено</div>
+                </div>
+                <div class="step-body">
+                    <div class="muted small" id="dec-carrier">Посылка: —</div>
+                    <div class="field">
+                        <label class="field-label">AES-ключ (64 hex)</label>
+                        <input type="text" id="dec-stego-key" placeholder="ключ">
+                    </div>
+                    <button class="btn primary full" id="btn-extract-stego-main">Извлечь</button>
+                </div>
+            </div>
+
+            <div class="field grow">
+                <label class="field-label">Результат</label>
+                <textarea id="dec-result" class="result-area" readonly placeholder="Здесь появится результат..."></textarea>
+            </div>
+        </div>
+
+        <footer class="modal-footer">
+            <button class="btn ghost" id="btn-copy-result">Копировать</button>
+            <button class="btn primary" data-close="modal-decryptor">Готово</button>
+        </footer>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL: KEYS
+     ============================================================ -->
+<div class="modal hidden" id="modal-keys">
+    <div class="modal-backdrop" data-close="modal-keys"></div>
+    <div class="modal-window modal-wide">
+        <header class="modal-header">
+            <h2>
+                <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="15" r="4"/>
+                    <path d="M10.85 12.15L19 4M18 5l2 2M15 8l2 2"/>
+                </svg>
+                Менеджер ключей
+            </h2>
+            <button class="icon-btn" data-close="modal-keys">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </header>
+
+        <div class="modal-body">
+            <div class="tabs" id="keys-tabs">
+                <button class="tab-btn active" data-tab="aes">AES</button>
+                <button class="tab-btn" data-tab="time">Time-соли</button>
+                <button class="tab-btn" data-tab="num">Номерные</button>
+            </div>
+
+            <div class="tab-pane" id="tab-aes">
+                <div class="keys-list" id="aes-list"></div>
+                <div class="add-form">
+                    <input type="text" id="aes-name" placeholder="Имя ключа">
+                    <div class="input-row">
+                        <input type="text" id="aes-key" placeholder="Ключ (base64/hex)">
+                        <button class="btn small ghost" id="btn-gen-aes">Gen</button>
+                    </div>
+                    <button class="btn primary full" id="btn-add-aes">Добавить</button>
+                </div>
+            </div>
+
+            <div class="tab-pane hidden" id="tab-time">
+                <div class="keys-list" id="time-list"></div>
+                <div class="add-form">
+                    <input type="text" id="time-name" placeholder="Имя соли">
+                    <div class="input-row">
+                        <input type="text" id="time-salt" placeholder="Соль (6–256 символов)">
+                        <button class="btn small ghost" id="btn-gen-salt">Gen</button>
+                    </div>
+                    <button class="btn primary full" id="btn-add-salt">Добавить</button>
+                </div>
+            </div>
+
+            <div class="tab-pane hidden" id="tab-num">
+                <div class="keys-list" id="num-list"></div>
+                <div class="add-form">
+                    <input type="text" id="num-key" placeholder="Номерной ключ">
+                    <div class="input-row">
+                        <button class="btn primary small" id="btn-add-num">Добавить</button>
+                        <button class="btn small ghost" id="btn-import-audio">Импорт</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     MODAL: CONFIRM
+     ============================================================ -->
+<div class="modal hidden" id="modal-confirm">
+    <div class="modal-backdrop" data-close="modal-confirm"></div>
+    <div class="modal-window modal-small">
+        <header class="modal-header">
+            <h2 id="confirm-title">Подтверждение</h2>
+        </header>
+        <div class="modal-body">
+            <p id="confirm-text" style="color: var(--text-2); line-height: 1.6;"></p>
+        </div>
+        <footer class="modal-footer">
+            <button class="btn ghost" data-close="modal-confirm">Отмена</button>
+            <button class="btn danger" id="confirm-yes">Да, продолжить</button>
+        </footer>
+    </div>
+</div>
+
+<div class="toast-container" id="toasts"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

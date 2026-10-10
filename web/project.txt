@@ -1,0 +1,4 @@
+cryptomail-web/
+├── index.html
+├── style.css
+└── app.js
