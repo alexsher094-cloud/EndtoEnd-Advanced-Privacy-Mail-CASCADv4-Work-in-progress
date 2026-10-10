@@ -13,3 +13,9 @@
 <img width="1871" height="920" alt="image" src="https://github.com/user-attachments/assets/bdeb0514-17e9-4df2-82bd-8f37c22d2796" />
 
 Work in progress. Этот проект еще не закончен, поэтому в нем может быть/есть куча багов, дыр в безопасности. Если вы и собираетесь им пользоваться, то делайте это на свой страх и риск. Автор снимает с себя любую ответственность.
+
+Что значит EAPM? End-to-End Advanced Privacy Mail. Electronic Analog of Physical Mail.
+Сколько участников в проекте? 1. Это я.
+Когда продакшн? Когда мне все "достаточно" понравится
+Лецензия? MIT. Уведомления отсылать на alexsher094@gmail.com
+
